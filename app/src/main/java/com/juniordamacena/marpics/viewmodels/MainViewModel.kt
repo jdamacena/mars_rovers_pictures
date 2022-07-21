@@ -1,4 +1,4 @@
-package com.juniordamacena.marpics.ui.main
+package com.juniordamacena.marpics.viewmodels
 
 import androidx.lifecycle.ViewModel
 

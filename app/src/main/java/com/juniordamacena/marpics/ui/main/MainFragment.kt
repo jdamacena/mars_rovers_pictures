@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
-import com.juniordamacena.marpics.databinding.ActivityMainBinding
+import com.juniordamacena.marpics.R
+import com.juniordamacena.marpics.adapters.SectionsPagerAdapter
+import com.juniordamacena.marpics.databinding.FragmentMainBinding
 import com.juniordamacena.marpics.models.Rover
-import com.juniordamacena.marpics.services.RetrofitInstance
+import com.juniordamacena.marpics.repositories.RetrofitInstance
+import com.juniordamacena.marpics.viewmodels.MainViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -26,7 +29,7 @@ class MainFragment : Fragment() {
     }
 
     private lateinit var viewModel: MainViewModel
-    private var _binding: ActivityMainBinding? = null
+    private var _binding: FragmentMainBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -41,16 +44,13 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ActivityMainBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         val root = binding.root
 
         val fab: FloatingActionButton = binding.fab
 
-        fab.setOnClickListener { view ->
-            Snackbar
-                .make(view, "roverName", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+        fab.setOnClickListener {
+            findNavController().navigate(R.id.action_MainFragment_to_ApodFragment)
         }
 
         viewModel.viewModelScope.launch {
@@ -63,6 +63,7 @@ class MainFragment : Fragment() {
                     parentFragmentManager,
                     listRovers
                 )
+
                 val viewPager: ViewPager = binding.viewPager
                 viewPager.adapter = sectionsPagerAdapter
                 val tabs: TabLayout = binding.tabs

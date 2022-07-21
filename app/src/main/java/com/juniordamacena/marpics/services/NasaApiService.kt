@@ -1,5 +1,6 @@
 package com.juniordamacena.marpics.services
 
+import com.juniordamacena.marpics.models.PhotoOfTheDayResponse
 import com.juniordamacena.marpics.models.PhotosApiResponse
 import com.juniordamacena.marpics.models.RoversApiResponse
 import retrofit2.Response
@@ -29,6 +30,6 @@ interface NasaApiService {
     @GET("/planetary/apod")
     suspend fun getAPOD(
         @Query("api_key") api_key: String
-    ): Response<RoversApiResponse>
+    ): Response<PhotoOfTheDayResponse>
 
 }

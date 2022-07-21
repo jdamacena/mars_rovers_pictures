@@ -1,5 +1,6 @@
-package com.juniordamacena.marpics.services
+package com.juniordamacena.marpics.repositories
 
+import com.juniordamacena.marpics.services.NasaApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
