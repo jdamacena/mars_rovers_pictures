@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juniordamacena.marpics.models.Rover
-import com.juniordamacena.marpics.repositories.PhotosRepository
+import com.juniordamacena.marpics.repositories.PhotosRepositoryImpl
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
-    private val photosRepository = PhotosRepository.getInstance()
+    private val photosRepository = PhotosRepositoryImpl.getInstance()
 
     var selectedTabIndex = 0
     private var _listRovers = MutableLiveData<List<Rover>>()

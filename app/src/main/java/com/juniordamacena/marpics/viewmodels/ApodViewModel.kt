@@ -4,12 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juniordamacena.marpics.models.PhotoOfTheDayResponse
-import com.juniordamacena.marpics.repositories.PhotosRepository
+import com.juniordamacena.marpics.repositories.PhotosRepositoryImpl
 import kotlinx.coroutines.launch
 
 class ApodViewModel : ViewModel() {
 
-    private val photosRepository = PhotosRepository.getInstance()
+    private val photosRepository = PhotosRepositoryImpl.getInstance()
 
     var photoOfTheDay = MutableLiveData<PhotoOfTheDayResponse>()
 

@@ -1,11 +1,11 @@
 package com.juniordamacena.marpics.viewmodels
 
 import androidx.lifecycle.*
-import com.juniordamacena.marpics.repositories.PhotosRepository
+import com.juniordamacena.marpics.repositories.PhotosRepositoryImpl
 import kotlinx.coroutines.launch
 
 class PageViewModel : ViewModel() {
-    private val photosRepository = PhotosRepository.getInstance()
+    private val photosRepository = PhotosRepositoryImpl.getInstance()
 
     private val _index = MutableLiveData<Int>()
     val text: LiveData<String> = Transformations.map(_index) {
