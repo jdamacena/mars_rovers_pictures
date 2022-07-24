@@ -14,13 +14,13 @@ class MainViewModel : ViewModel(), KoinComponent {
     private val photosRepository: PhotosRepository by inject()
 
     var selectedTabIndex = 0
-    private var _listRovers = MutableLiveData<List<Rover>>()
+
+    private val _listRovers = MutableLiveData<List<Rover>>()
+    private val _isLoading = MutableLiveData<Boolean>()
 
     fun getListRovers(): LiveData<List<Rover>> {
         return _listRovers
     }
-
-    private var _isLoading = MutableLiveData<Boolean>()
 
     fun getIsLoading(): MutableLiveData<Boolean> {
         return _isLoading

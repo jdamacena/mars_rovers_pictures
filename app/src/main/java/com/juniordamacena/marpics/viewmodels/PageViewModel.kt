@@ -14,15 +14,28 @@ class PageViewModel : ViewModel(), KoinComponent {
         "Hello world from section: $it"
     }
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    private val _photoUrl = MutableLiveData<String>()
+
     fun setIndex(index: Int) {
         _index.value = index
     }
 
-    var photoUrl = MutableLiveData<String>()
+    fun getIsLoading(): MutableLiveData<Boolean> {
+        return _isLoading
+    }
+
+    fun getPhotoUrl(): LiveData<String> {
+        return _photoUrl
+    }
 
     fun queryPhotoUrl() {
         viewModelScope.launch {
-            photoUrl.value = photosRepository.queryPhotoUrl()
+            _isLoading.value = true
+
+            _photoUrl.value = photosRepository.queryPhotoUrl()
+
+            _isLoading.value = false
         }
     }
 }

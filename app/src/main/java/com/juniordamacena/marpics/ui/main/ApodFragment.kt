@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.juniordamacena.marpics.databinding.FragmentApodBinding
 import com.juniordamacena.marpics.viewmodels.ApodViewModel
@@ -40,14 +38,19 @@ class ApodFragment : Fragment() {
         _binding = FragmentApodBinding.inflate(inflater, container, false)
         val root = binding.root
 
-        viewModel.photoOfTheDay.observe(viewLifecycleOwner) {
+        viewModel.getPhotoOfTheDay().observe(viewLifecycleOwner) {
             if (it == null) return@observe
 
-            _binding?.textView?.text = it.explanation
+            binding.textView.text = it.explanation
 
             Glide.with(this)
                 .load(it.url)
                 .into(_binding!!.imageView2)
+        }
+
+        viewModel.getIsLoading().observe(viewLifecycleOwner) {
+            binding.progressBar.isVisible = it
+            binding.scrollView3.isVisible = !it
         }
 
         return root

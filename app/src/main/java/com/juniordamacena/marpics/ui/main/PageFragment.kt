@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -49,12 +50,16 @@ class PageFragment : Fragment() {
             textView.text = it
         }
 
-        pageViewModel.photoUrl.observe(viewLifecycleOwner) {
+        pageViewModel.getPhotoUrl().observe(viewLifecycleOwner) {
             if(it == null) return@observe
 
             Glide.with(this@PageFragment)
                 .load(it)
                 .into(_binding!!.imageView)
+        }
+
+        pageViewModel.getIsLoading().observe(viewLifecycleOwner) {
+            binding.progressBar.isVisible = it
         }
 
         return root
