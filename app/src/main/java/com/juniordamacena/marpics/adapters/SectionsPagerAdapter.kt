@@ -14,7 +14,7 @@ import com.juniordamacena.marpics.ui.main.PageFragment
 class SectionsPagerAdapter(
     private val context: Context,
     fm: FragmentManager,
-    private val tabs: List<Rover>
+    var tabs: List<Rover>
 ) :
     FragmentPagerAdapter(fm) {
 

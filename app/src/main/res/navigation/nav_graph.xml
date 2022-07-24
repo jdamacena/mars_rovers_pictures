@@ -19,10 +19,5 @@
         android:id="@+id/ApodFragment"
         android:name="com.juniordamacena.marpics.ui.main.ApodFragment"
         android:label="@string/apod_fragment_label"
-        tools:layout="@layout/fragment_apod">
-
-        <action
-            android:id="@+id/action_ApodFragment_to_MainFragment"
-            app:destination="@id/MainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_apod"/>
 </navigation>

@@ -15,7 +15,7 @@ class ApodViewModel : ViewModel() {
 
     fun queryApod() {
         viewModelScope.launch {
-            photoOfTheDay = photosRepository?.queryApod()!!
+            photoOfTheDay.value = photosRepository?.queryApod()
         }
     }
 }

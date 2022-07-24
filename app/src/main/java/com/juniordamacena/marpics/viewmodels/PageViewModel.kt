@@ -16,11 +16,11 @@ class PageViewModel : ViewModel() {
         _index.value = index
     }
 
-    var photoUrl: MutableLiveData<String> = MutableLiveData<String>()
+    var photoUrl = MutableLiveData<String>()
 
     fun queryPhotoUrl() {
         viewModelScope.launch {
-           photoUrl = photosRepository?.queryPhotoUrl()!!
+           photoUrl.value = photosRepository?.queryPhotoUrl()
         }
     }
 }
