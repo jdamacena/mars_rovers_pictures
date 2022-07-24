@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.juniordamacena.marpics.databinding.FragmentApodBinding
 import com.juniordamacena.marpics.viewmodels.ApodViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ApodFragment : Fragment() {
 
@@ -17,7 +17,7 @@ class ApodFragment : Fragment() {
         fun newInstance() = ApodFragment()
     }
 
-    private val viewModel: ApodViewModel by viewModels()
+    private val viewModel: ApodViewModel by viewModel()
 
     private var _binding: FragmentApodBinding? = null
 

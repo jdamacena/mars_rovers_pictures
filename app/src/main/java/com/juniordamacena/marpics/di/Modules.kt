@@ -3,6 +3,10 @@ package com.juniordamacena.marpics.di
 import com.juniordamacena.marpics.repositories.PhotosRepository
 import com.juniordamacena.marpics.repositories.PhotosRepositoryImpl
 import com.juniordamacena.marpics.services.NasaApiService
+import com.juniordamacena.marpics.viewmodels.ApodViewModel
+import com.juniordamacena.marpics.viewmodels.MainViewModel
+import com.juniordamacena.marpics.viewmodels.PageViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -22,4 +26,8 @@ val appModule = module {
     }
 
     single<PhotosRepository> { PhotosRepositoryImpl(get(), get(named("API_KEY"))) }
+
+    viewModel { ApodViewModel() }
+    viewModel { PageViewModel() }
+    viewModel { MainViewModel() }
 }

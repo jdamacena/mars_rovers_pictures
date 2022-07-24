@@ -8,19 +8,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.juniordamacena.marpics.databinding.FragmentPageBinding
 import com.juniordamacena.marpics.models.Rover
 import com.juniordamacena.marpics.viewmodels.PageViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A placeholder fragment containing a simple view.
  */
 class PageFragment : Fragment() {
 
-    private val pageViewModel: PageViewModel by viewModels()
+    private val pageViewModel: PageViewModel by viewModel()
     private var _binding: FragmentPageBinding? = null
 
     // This property is only valid between onCreateView and

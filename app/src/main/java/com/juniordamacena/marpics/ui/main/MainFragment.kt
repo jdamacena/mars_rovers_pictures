@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -14,6 +13,7 @@ import com.google.android.material.tabs.TabLayout
 import com.juniordamacena.marpics.adapters.SectionsPagerAdapter
 import com.juniordamacena.marpics.databinding.FragmentMainBinding
 import com.juniordamacena.marpics.viewmodels.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
 
@@ -21,7 +21,7 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModel()
     private var _binding: FragmentMainBinding? = null
 
     // This property is only valid between onCreateView and
