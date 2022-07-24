@@ -4,18 +4,23 @@ import android.util.Log
 import com.juniordamacena.marpics.models.Photo
 import com.juniordamacena.marpics.models.PhotoOfTheDayResponse
 import com.juniordamacena.marpics.models.Rover
+import com.juniordamacena.marpics.services.NasaApiService
 import retrofit2.HttpException
 import java.io.IOException
 
 /*Created by junio on 20/07/2022.*/
-class PhotosRepositoryImpl : PhotosRepository {
+class PhotosRepositoryImpl(
+    private val nasaApiService: NasaApiService,
+    private val API_KEY: String
+) : PhotosRepository {
+
     override suspend fun queryPhotoUrl(): String {
         var photoUrl = ""
 
         try {
-            val response = RetrofitInstance.api.listPhotos(
+            val response = nasaApiService.listPhotos(
                 "Curiosity",
-                RetrofitInstance.API_KEY,
+                API_KEY,
                 sol = (10..100).random(),
                 earth_date = null
             )
@@ -36,10 +41,10 @@ class PhotosRepositoryImpl : PhotosRepository {
     }
 
     override suspend fun queryApod(): PhotoOfTheDayResponse? {
-        var photo : PhotoOfTheDayResponse? = null
+        var photo: PhotoOfTheDayResponse? = null
 
         try {
-            val response = RetrofitInstance.api.getAPOD(RetrofitInstance.API_KEY)
+            val response = nasaApiService.getAPOD(API_KEY)
             val apod: PhotoOfTheDayResponse? = response.body()
 
             photo = apod!!
@@ -56,7 +61,7 @@ class PhotosRepositoryImpl : PhotosRepository {
         var rovers: List<Rover> = emptyList()
 
         try {
-            val response = RetrofitInstance.api.listRovers(RetrofitInstance.API_KEY)
+            val response = nasaApiService.listRovers(API_KEY)
             val listRovers: List<Rover> = response.body()?.rovers ?: emptyList()
 
             rovers = listRovers
@@ -68,16 +73,4 @@ class PhotosRepositoryImpl : PhotosRepository {
 
         return rovers
     }
-
-    companion object {
-        private var instance: PhotosRepositoryImpl? = null
-
-        fun getInstance(): PhotosRepositoryImpl? {
-            if (instance == null) {
-                instance = PhotosRepositoryImpl()
-            }
-            return instance
-        }
-    }
-
 }

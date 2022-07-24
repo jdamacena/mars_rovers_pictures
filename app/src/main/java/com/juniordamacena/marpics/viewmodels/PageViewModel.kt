@@ -1,11 +1,13 @@
 package com.juniordamacena.marpics.viewmodels
 
 import androidx.lifecycle.*
-import com.juniordamacena.marpics.repositories.PhotosRepositoryImpl
+import com.juniordamacena.marpics.repositories.PhotosRepository
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class PageViewModel : ViewModel() {
-    private val photosRepository = PhotosRepositoryImpl.getInstance()
+class PageViewModel : ViewModel(), KoinComponent {
+    private val photosRepository: PhotosRepository by inject()
 
     private val _index = MutableLiveData<Int>()
     val text: LiveData<String> = Transformations.map(_index) {
@@ -20,7 +22,7 @@ class PageViewModel : ViewModel() {
 
     fun queryPhotoUrl() {
         viewModelScope.launch {
-           photoUrl.value = photosRepository?.queryPhotoUrl()
+            photoUrl.value = photosRepository?.queryPhotoUrl()
         }
     }
 }

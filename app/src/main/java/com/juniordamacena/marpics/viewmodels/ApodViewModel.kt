@@ -4,12 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juniordamacena.marpics.models.PhotoOfTheDayResponse
-import com.juniordamacena.marpics.repositories.PhotosRepositoryImpl
+import com.juniordamacena.marpics.repositories.PhotosRepository
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class ApodViewModel : ViewModel() {
+class ApodViewModel : ViewModel(), KoinComponent {
 
-    private val photosRepository = PhotosRepositoryImpl.getInstance()
+   private val photosRepository : PhotosRepository by inject()
 
     var photoOfTheDay = MutableLiveData<PhotoOfTheDayResponse>()
 
