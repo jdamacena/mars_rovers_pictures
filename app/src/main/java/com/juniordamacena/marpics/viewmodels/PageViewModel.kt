@@ -22,7 +22,7 @@ class PageViewModel : ViewModel(), KoinComponent {
 
     fun queryPhotoUrl() {
         viewModelScope.launch {
-            photoUrl.value = photosRepository?.queryPhotoUrl()
+            photoUrl.value = photosRepository.queryPhotoUrl()
         }
     }
 }

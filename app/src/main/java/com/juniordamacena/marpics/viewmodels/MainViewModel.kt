@@ -30,7 +30,7 @@ class MainViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch {
             _isLoading.value = true
 
-            _listRovers.value = photosRepository?.queryRovers()
+            _listRovers.value = photosRepository.queryRovers()
 
             _isLoading.value = false
         }

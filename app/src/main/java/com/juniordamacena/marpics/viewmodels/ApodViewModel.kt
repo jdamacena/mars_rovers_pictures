@@ -17,7 +17,7 @@ class ApodViewModel : ViewModel(), KoinComponent {
 
     fun queryApod() {
         viewModelScope.launch {
-            photoOfTheDay.value = photosRepository?.queryApod()
+            photoOfTheDay.value = photosRepository.queryApod()
         }
     }
 }
