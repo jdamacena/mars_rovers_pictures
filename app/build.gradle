@@ -70,4 +70,6 @@ dependencies {
     def koin_version = "3.2.0"
 
     implementation "io.insert-koin:koin-android:$koin_version"
+
+    implementation "androidx.cardview:cardview:1.0.0"
 }

@@ -4,8 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.juniordamacena.marpics.databinding.PhotoListItemBinding
 import com.juniordamacena.marpics.models.Photo
+
 
 /*Created by junio on 25/07/2022.*/
 class PhotoListAdapter(
@@ -32,7 +36,7 @@ class PhotoListAdapter(
 
             Glide.with(holder.itemView.context)
                 .load(photo.img_src)
-                .centerCrop()
+                .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(16)))
                 .placeholder(android.R.drawable.ic_menu_report_image)
                 .into(imageView)
         }
