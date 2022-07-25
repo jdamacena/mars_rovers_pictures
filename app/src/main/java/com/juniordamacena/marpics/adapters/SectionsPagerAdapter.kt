@@ -19,12 +19,10 @@ class SectionsPagerAdapter(
     FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PageFragment.newInstance(position + 1, tabs.elementAt(position))
+        return PageFragment.newInstance(tabs.elementAt(position))
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return tabs.elementAt(position).name
     }
 

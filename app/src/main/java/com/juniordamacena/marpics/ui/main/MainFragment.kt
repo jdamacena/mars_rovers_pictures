@@ -82,6 +82,6 @@ class MainFragment : Fragment() {
     override fun onStop() {
         super.onStop()
 
-        viewModel.selectedTabIndex = binding?.tabs?.selectedTabPosition ?: 0
+        viewModel.selectedTabIndex = binding.tabs.selectedTabPosition
     }
 }

@@ -1,11 +1,10 @@
 package com.juniordamacena.marpics.repositories
 
+import com.juniordamacena.marpics.models.Photo
 import com.juniordamacena.marpics.models.PhotoOfTheDayResponse
 import com.juniordamacena.marpics.models.Rover
 
 interface PhotosRepository {
-    suspend fun queryPhotoUrl(): String
-
     /**
      * Fetches the Astronomy Photo of the Day data
      */
@@ -15,4 +14,9 @@ interface PhotosRepository {
      * Fetches a list of Rovers objects
      */
     suspend fun queryRovers(): List<Rover>
+
+    /**
+     * Fetches a list of photos from a rover
+     */
+    suspend fun queryPhotosByRover(rover: Rover): List<Photo>
 }

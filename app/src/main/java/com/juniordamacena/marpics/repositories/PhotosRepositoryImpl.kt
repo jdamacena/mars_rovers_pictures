@@ -14,32 +14,6 @@ class PhotosRepositoryImpl(
     private val API_KEY: String
 ) : PhotosRepository {
 
-    override suspend fun queryPhotoUrl(): String {
-        var photoUrl = ""
-
-        try {
-            val response = nasaApiService.listPhotos(
-                "Curiosity",
-                API_KEY,
-                sol = (10..100).random(),
-                earth_date = null
-            )
-            val listPhotos: List<Photo>? = response.body()?.photos
-            val firstPhoto = listPhotos?.firstOrNull()
-
-            photoUrl = firstPhoto?.img_src
-                ?: "https://www.iconsdb.com/icons/download/red/error-7-128.jpg"
-
-        } catch (e: IOException) {
-            Log.e("PhotosRepository", e.message ?: "IOException")
-        } catch (e: HttpException) {
-            Log.e("PhotosRepository", e.message ?: "HttpException")
-        }
-
-
-        return photoUrl
-    }
-
     override suspend fun queryApod(): PhotoOfTheDayResponse? {
         var photo: PhotoOfTheDayResponse? = null
 
@@ -72,5 +46,28 @@ class PhotosRepositoryImpl(
         }
 
         return rovers
+    }
+
+    override suspend fun queryPhotosByRover(rover: Rover): List<Photo> {
+        var photosList: List<Photo> = emptyList()
+
+        try {
+            val response = nasaApiService.listPhotos(
+                rover.name,
+                API_KEY,
+                earth_date = rover.max_date ?: rover.landing_date,
+                sol = null
+            )
+            val listPhotos: List<Photo>? = response.body()?.photos
+
+            photosList = listPhotos ?: emptyList()
+
+        } catch (e: IOException) {
+            Log.e("PhotosRepository", e.message ?: "IOException")
+        } catch (e: HttpException) {
+            Log.e("PhotosRepository", e.message ?: "HttpException")
+        }
+
+        return photosList
     }
 }
