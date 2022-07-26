@@ -41,11 +41,13 @@ class ApodFragment : Fragment() {
         viewModel.getPhotoOfTheDay().observe(viewLifecycleOwner) {
             if (it == null) return@observe
 
-            binding.textView.text = it.explanation
+            binding.textView.text = "${it.title}\n\n${it.explanation}\n\nMedia type: ${it.media_type}"
 
             Glide.with(this)
                 .load(it.url)
-                .into(_binding!!.imageView2)
+                .error(android.R.drawable.stat_notify_error)
+                .placeholder(android.R.drawable.ic_menu_myplaces)
+                .into(binding.imageView2)
         }
 
         viewModel.getIsLoading().observe(viewLifecycleOwner) {

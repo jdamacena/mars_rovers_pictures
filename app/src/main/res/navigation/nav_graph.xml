@@ -14,7 +14,15 @@
         <action
             android:id="@+id/action_MainFragment_to_ApodFragment"
             app:destination="@id/ApodFragment" />
+        <action
+            android:id="@+id/action_MainFragment_to_GalleryFragment"
+            app:destination="@id/GalleryFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/GalleryFragment"
+        android:name="com.juniordamacena.marpics.ui.main.GalleryFragment"
+        android:label="@string/gallery_fragment_label"
+        tools:layout="@layout/fragment_gallery"/>
     <fragment
         android:id="@+id/ApodFragment"
         android:name="com.juniordamacena.marpics.ui.main.ApodFragment"

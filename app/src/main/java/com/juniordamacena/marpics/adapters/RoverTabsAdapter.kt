@@ -11,7 +11,7 @@ import com.juniordamacena.marpics.ui.main.PageFragment
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter(
+class RoverTabsAdapter(
     private val context: Context,
     fm: FragmentManager,
     var tabs: List<Rover>

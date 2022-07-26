@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
-import com.juniordamacena.marpics.adapters.SectionsPagerAdapter
+import com.juniordamacena.marpics.adapters.RoverTabsAdapter
 import com.juniordamacena.marpics.databinding.FragmentMainBinding
 import com.juniordamacena.marpics.viewmodels.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -48,11 +48,11 @@ class MainFragment : Fragment() {
         val viewPager: ViewPager = binding.viewPager
         val tabs: TabLayout = binding.tabs
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(
+        val roverTabsAdapter = RoverTabsAdapter(
             requireContext(), childFragmentManager, emptyList()
         )
 
-        viewPager.adapter = sectionsPagerAdapter
+        viewPager.adapter = roverTabsAdapter
         tabs.setupWithViewPager(viewPager)
 
         fab.setOnClickListener {
@@ -68,7 +68,7 @@ class MainFragment : Fragment() {
         viewModel.getListRovers().observe(viewLifecycleOwner) { listRovers ->
             if (listRovers == null) return@observe
 
-            (viewPager.adapter as SectionsPagerAdapter).apply {
+            (viewPager.adapter as RoverTabsAdapter).apply {
                 this.tabs = listRovers
                 notifyDataSetChanged()
             }

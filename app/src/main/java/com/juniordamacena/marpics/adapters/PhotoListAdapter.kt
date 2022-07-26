@@ -13,7 +13,8 @@ import com.juniordamacena.marpics.models.Photo
 
 /*Created by junio on 25/07/2022.*/
 class PhotoListAdapter(
-    val list: MutableList<Photo>
+    val list: MutableList<Photo>,
+    private val onClick: (Photo) -> Unit
 ) : RecyclerView.Adapter<PhotoListAdapter.PhotoListViewHolder>() {
 
     inner class PhotoListViewHolder(val binding: PhotoListItemBinding) :
@@ -29,6 +30,8 @@ class PhotoListAdapter(
 
     override fun onBindViewHolder(holder: PhotoListViewHolder, position: Int) {
         val photo = list[position]
+
+        holder.itemView.setOnClickListener { onClick(photo) }
 
         holder.binding.apply {
             lblEarthDate.text = photo.earth_date

@@ -18,5 +18,7 @@ interface PhotosRepository {
     /**
      * Fetches a list of photos from a rover
      */
+    suspend fun queryLatestPhotosByRover(roverName: String): List<Photo>
+
     suspend fun queryPhotosByRover(rover: Rover): List<Photo>
 }

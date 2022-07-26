@@ -32,4 +32,10 @@ interface NasaApiService {
         @Query("api_key") api_key: String
     ): Response<PhotoOfTheDayResponse>
 
+    @GET("rovers/{rover_name}/latest_photos")
+    suspend fun listLatestPhotos(
+        @Path("rover_name") rover_name: String,
+        @Query("api_key") api_key: String,
+    ): Response<PhotosApiResponse>
+
 }

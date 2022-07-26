@@ -1,6 +1,5 @@
 package com.juniordamacena.marpics.di
 
-import com.juniordamacena.marpics.models.Rover
 import com.juniordamacena.marpics.repositories.PhotosRepository
 import com.juniordamacena.marpics.repositories.PhotosRepositoryImpl
 import com.juniordamacena.marpics.services.NasaApiService
@@ -29,6 +28,6 @@ val appModule = module {
     single<PhotosRepository> { PhotosRepositoryImpl(get(), get(named("API_KEY"))) }
 
     viewModel { ApodViewModel() }
-    viewModel { parameters -> PageViewModel(rover = parameters.get()) }
+    viewModel { PageViewModel() } //{ parameters -> PageViewModel(rover = parameters.get()) }
     viewModel { MainViewModel() }
 }

@@ -1,16 +1,19 @@
 package com.juniordamacena.marpics.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.juniordamacena.marpics.models.Photo
-import com.juniordamacena.marpics.models.Rover
 import com.juniordamacena.marpics.repositories.PhotosRepository
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class PageViewModel(private val rover: Rover) : ViewModel(), KoinComponent {
+class PageViewModel(/*private val rover: Rover*/) : ViewModel(), KoinComponent {
     private val photosRepository: PhotosRepository by inject()
 
+    var selectedId = 0
     private val _isLoading = MutableLiveData<Boolean>()
     private val _photos = MutableLiveData<List<Photo>>()
 
@@ -26,7 +29,8 @@ class PageViewModel(private val rover: Rover) : ViewModel(), KoinComponent {
         viewModelScope.launch {
             _isLoading.value = true
 
-            _photos.value = photosRepository.queryPhotosByRover(rover)
+//            _photos.value = photosRepository.queryPhotosByRover(rover)
+            _photos.value = photosRepository.queryLatestPhotosByRover("curiosity")
 
             _isLoading.value = false
         }

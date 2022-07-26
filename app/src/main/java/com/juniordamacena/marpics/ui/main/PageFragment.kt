@@ -6,22 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.juniordamacena.marpics.R
 import com.juniordamacena.marpics.adapters.PhotoListAdapter
 import com.juniordamacena.marpics.databinding.FragmentPageBinding
+import com.juniordamacena.marpics.models.Photo
 import com.juniordamacena.marpics.models.Rover
 import com.juniordamacena.marpics.viewmodels.PageViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * A placeholder fragment containing a simple view.
  */
 class PageFragment : Fragment() {
-    var rover: Rover? = null
+    private var rover: Rover? = null
 
-    private val pageViewModel: PageViewModel by viewModel { parametersOf(rover) }
+    private val pageViewModel: PageViewModel by sharedViewModel()
     private var _binding: FragmentPageBinding? = null
 
     // This property is only valid between onCreateView and
@@ -49,7 +50,7 @@ class PageFragment : Fragment() {
             binding.progressBar.isVisible = it
         }
 
-        val repositoriesAdapter = PhotoListAdapter(mutableListOf())
+        val repositoriesAdapter = PhotoListAdapter(mutableListOf(), this@PageFragment::adapterOnClick)
 
         binding.rvPhotosList.apply {
             adapter = repositoriesAdapter
@@ -65,6 +66,14 @@ class PageFragment : Fragment() {
         }
 
         return root
+    }
+
+    private fun adapterOnClick(photo: Photo) {
+        pageViewModel.selectedId = photo.id
+
+        val action = MainFragmentDirections.actionMainFragmentToGalleryFragment()
+
+        findNavController().navigate(action)
     }
 
     companion object {

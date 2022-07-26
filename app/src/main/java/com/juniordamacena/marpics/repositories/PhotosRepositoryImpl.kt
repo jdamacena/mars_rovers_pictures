@@ -48,6 +48,26 @@ class PhotosRepositoryImpl(
         return rovers
     }
 
+    override suspend fun queryLatestPhotosByRover(roverName: String): List<Photo> {
+        var photosList: List<Photo> = emptyList()
+
+        try {
+            val response = nasaApiService.listLatestPhotos(roverName, API_KEY)
+            val listPhotos: List<Photo>? = response.body()?.photos
+
+            Log.d("response", response.toString())
+
+            photosList = listPhotos ?: emptyList()
+
+        } catch (e: IOException) {
+            Log.e("PhotosRepository", e.message ?: "IOException")
+        } catch (e: HttpException) {
+            Log.e("PhotosRepository", e.message ?: "HttpException")
+        }
+
+        return photosList
+    }
+
     override suspend fun queryPhotosByRover(rover: Rover): List<Photo> {
         var photosList: List<Photo> = emptyList()
 
