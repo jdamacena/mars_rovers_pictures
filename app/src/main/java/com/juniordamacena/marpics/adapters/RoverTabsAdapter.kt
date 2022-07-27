@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.juniordamacena.marpics.models.Rover
+import com.juniordamacena.marpics.models.main.Rover
 import com.juniordamacena.marpics.ui.main.PageFragment
 
 /**

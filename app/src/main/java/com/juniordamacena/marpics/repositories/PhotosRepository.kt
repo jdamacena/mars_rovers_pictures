@@ -1,8 +1,8 @@
 package com.juniordamacena.marpics.repositories
 
-import com.juniordamacena.marpics.models.Photo
-import com.juniordamacena.marpics.models.PhotoOfTheDayResponse
-import com.juniordamacena.marpics.models.Rover
+import com.juniordamacena.marpics.models.main.Photo
+import com.juniordamacena.marpics.models.network.PhotoOfTheDayResponse
+import com.juniordamacena.marpics.models.main.Rover
 
 interface PhotosRepository {
     /**

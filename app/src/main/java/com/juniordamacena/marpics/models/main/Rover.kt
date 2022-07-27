@@ -1,4 +1,4 @@
-package com.juniordamacena.marpics.models
+package com.juniordamacena.marpics.models.main
 
 data class Rover(
     val cameras: List<Camera>?,

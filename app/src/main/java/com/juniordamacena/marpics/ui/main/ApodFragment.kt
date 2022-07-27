@@ -41,10 +41,12 @@ class ApodFragment : Fragment() {
         viewModel.getPhotoOfTheDay().observe(viewLifecycleOwner) {
             if (it == null) return@observe
 
-            binding.textView.text = "${it.title}\n\n${it.explanation}\n\nMedia type: ${it.media_type}"
+            binding.textView.text = "${it.title}\n\n${it.explanation}\n\nCopyright: ${it.copyright}"
+
+            val imageUrl = if(it.media_type == "video") it.thumbnail_url else it.url
 
             Glide.with(this)
-                .load(it.url)
+                .load(imageUrl)
                 .error(android.R.drawable.stat_notify_error)
                 .placeholder(android.R.drawable.ic_menu_myplaces)
                 .into(binding.imageView2)

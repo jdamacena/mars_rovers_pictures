@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.juniordamacena.marpics.R
 import com.juniordamacena.marpics.adapters.PhotoListAdapter
 import com.juniordamacena.marpics.databinding.FragmentPageBinding
-import com.juniordamacena.marpics.models.Photo
-import com.juniordamacena.marpics.models.Rover
+import com.juniordamacena.marpics.models.main.Photo
+import com.juniordamacena.marpics.models.main.Rover
 import com.juniordamacena.marpics.viewmodels.PageViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

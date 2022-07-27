@@ -1,9 +1,9 @@
 package com.juniordamacena.marpics.repositories
 
 import android.util.Log
-import com.juniordamacena.marpics.models.Photo
-import com.juniordamacena.marpics.models.PhotoOfTheDayResponse
-import com.juniordamacena.marpics.models.Rover
+import com.juniordamacena.marpics.models.main.Photo
+import com.juniordamacena.marpics.models.network.PhotoOfTheDayResponse
+import com.juniordamacena.marpics.models.main.Rover
 import com.juniordamacena.marpics.services.NasaApiService
 import retrofit2.HttpException
 import java.io.IOException

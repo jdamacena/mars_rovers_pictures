@@ -8,7 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.juniordamacena.marpics.databinding.PhotoListItemBinding
-import com.juniordamacena.marpics.models.Photo
+import com.juniordamacena.marpics.models.main.Photo
 
 
 /*Created by junio on 25/07/2022.*/

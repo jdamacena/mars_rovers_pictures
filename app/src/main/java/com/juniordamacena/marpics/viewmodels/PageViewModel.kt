@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.juniordamacena.marpics.models.Photo
+import com.juniordamacena.marpics.models.main.Photo
 import com.juniordamacena.marpics.repositories.PhotosRepository
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent

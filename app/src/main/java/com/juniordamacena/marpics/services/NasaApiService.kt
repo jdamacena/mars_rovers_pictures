@@ -1,8 +1,8 @@
 package com.juniordamacena.marpics.services
 
-import com.juniordamacena.marpics.models.PhotoOfTheDayResponse
-import com.juniordamacena.marpics.models.PhotosApiResponse
-import com.juniordamacena.marpics.models.RoversApiResponse
+import com.juniordamacena.marpics.models.network.PhotoOfTheDayResponse
+import com.juniordamacena.marpics.models.network.PhotosApiResponse
+import com.juniordamacena.marpics.models.network.RoversApiResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -27,7 +27,7 @@ interface NasaApiService {
     /**
      * Get the Astronomy Photo of the Day (APOD)
      */
-    @GET("/planetary/apod")
+    @GET("/planetary/apod?thumbs=true")//&date=2022-07-26") // This date loads a video
     suspend fun getAPOD(
         @Query("api_key") api_key: String
     ): Response<PhotoOfTheDayResponse>

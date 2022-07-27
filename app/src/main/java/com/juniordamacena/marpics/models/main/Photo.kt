@@ -1,4 +1,4 @@
-package com.juniordamacena.marpics.models
+package com.juniordamacena.marpics.models.main
 
 data class Photo(
     val camera: Camera,
