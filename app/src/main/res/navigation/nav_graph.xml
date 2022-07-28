@@ -12,20 +12,32 @@
         tools:layout="@layout/fragment_main">
 
         <action
+            android:id="@+id/action_MainFragment_to_PageFragment"
+            app:destination="@id/navigation" />
+        <action
             android:id="@+id/action_MainFragment_to_ApodFragment"
             app:destination="@id/ApodFragment" />
-        <action
-            android:id="@+id/action_MainFragment_to_GalleryFragment"
-            app:destination="@id/GalleryFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/GalleryFragment"
-        android:name="com.juniordamacena.marpics.ui.main.GalleryFragment"
-        android:label="@string/gallery_fragment_label"
-        tools:layout="@layout/fragment_gallery"/>
     <fragment
         android:id="@+id/ApodFragment"
         android:name="com.juniordamacena.marpics.ui.main.ApodFragment"
         android:label="@string/apod_fragment_label"
-        tools:layout="@layout/fragment_apod"/>
+        tools:layout="@layout/fragment_apod" />
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/PageFragment">
+        <fragment
+            android:id="@+id/PageFragment"
+            android:name="com.juniordamacena.marpics.ui.main.PageFragment"
+            android:label="@string/app_name"
+            tools:layout="@layout/fragment_page" >
+            <action
+                android:id="@+id/action_PageFragment_to_GalleryFragment"
+                app:destination="@id/GalleryFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/GalleryFragment"
+            android:name="com.juniordamacena.marpics.ui.main.GalleryFragment"
+            android:label="@string/gallery_fragment_label"
+            tools:layout="@layout/fragment_gallery"/>
+    </navigation>
 </navigation>

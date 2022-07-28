@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.juniordamacena.marpics.R
 import com.juniordamacena.marpics.adapters.PhotoListAdapter
@@ -14,7 +15,6 @@ import com.juniordamacena.marpics.databinding.FragmentPageBinding
 import com.juniordamacena.marpics.models.main.Photo
 import com.juniordamacena.marpics.models.main.Rover
 import com.juniordamacena.marpics.viewmodels.PageViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * A placeholder fragment containing a simple view.
@@ -22,7 +22,8 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class PageFragment : Fragment() {
     private var rover: Rover? = null
 
-    private val pageViewModel: PageViewModel by sharedViewModel()
+    private val pageViewModel: PageViewModel by navGraphViewModels(R.id.navigation)
+
     private var _binding: FragmentPageBinding? = null
 
     // This property is only valid between onCreateView and
@@ -33,13 +34,13 @@ class PageFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            pageViewModel.queryPhotos()
+            pageViewModel.queryPhotos(rover?.name!!)
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
 
         _binding = FragmentPageBinding.inflate(inflater, container, false)
@@ -50,7 +51,8 @@ class PageFragment : Fragment() {
             binding.progressBar.isVisible = it
         }
 
-        val repositoriesAdapter = PhotoListAdapter(mutableListOf(), this@PageFragment::adapterOnClick)
+        val repositoriesAdapter =
+            PhotoListAdapter(mutableListOf(), this@PageFragment::adapterOnClick)
 
         binding.rvPhotosList.apply {
             adapter = repositoriesAdapter
@@ -71,7 +73,7 @@ class PageFragment : Fragment() {
     private fun adapterOnClick(photo: Photo) {
         pageViewModel.selectedId = photo.id
 
-        val action = MainFragmentDirections.actionMainFragmentToGalleryFragment()
+        val action = MainFragmentDirections.actionMainFragmentToPageFragment()
 
         findNavController().navigate(action)
     }

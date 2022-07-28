@@ -7,17 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.juniordamacena.marpics.databinding.FragmentGalleryPageBinding
+import com.juniordamacena.marpics.models.main.Photo
 import com.juniordamacena.marpics.viewmodels.GalleryPageViewModel
 
 class GalleryPageFragment : Fragment() {
 
     companion object {
-        fun newInstance(myString: String) = GalleryPageFragment().also {
-            it.myString = myString
+        fun newInstance(photo: Photo) = GalleryPageFragment().also {
+            it.photo = photo
         }
     }
 
-    private var myString: String? = null
+    private var photo: Photo? = null
 
     private var _binding: FragmentGalleryPageBinding? = null
 
@@ -35,10 +36,10 @@ class GalleryPageFragment : Fragment() {
         _binding = FragmentGalleryPageBinding.inflate(inflater, container, false)
         val root = binding.root
 
-        binding.textView.text = myString
+        binding.textView.text = photo?.img_src
 
         Glide.with(this)
-            .load(myString)
+            .load(photo?.img_src)
             .into(binding.imageView3)
 
         return root
