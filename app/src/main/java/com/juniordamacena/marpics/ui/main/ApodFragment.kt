@@ -33,17 +33,16 @@ class ApodFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentApodBinding.inflate(inflater, container, false)
-        val root = binding.root
 
         viewModel.getPhotoOfTheDay().observe(viewLifecycleOwner) {
             if (it == null) return@observe
 
             binding.textView.text = "${it.title}\n\n${it.explanation}\n\nCopyright: ${it.copyright}"
 
-            val imageUrl = if(it.media_type == "video") it.thumbnail_url else it.url
+            val imageUrl = if (it.media_type == "video") it.thumbnail_url else it.url
 
             Glide.with(this)
                 .load(imageUrl)
@@ -57,6 +56,6 @@ class ApodFragment : Fragment() {
             binding.scrollView3.isVisible = !it
         }
 
-        return root
+        return binding.root
     }
 }

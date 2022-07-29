@@ -1,24 +1,20 @@
 package com.juniordamacena.marpics.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
-import com.juniordamacena.marpics.adapters.GalleryAdapter
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.juniordamacena.marpics.databinding.FragmentGalleryBinding
-import com.juniordamacena.marpics.viewmodels.PageViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import com.juniordamacena.marpics.viewmodels.GalleryViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GalleryFragment : Fragment() {
+    private val args: GalleryFragmentArgs by navArgs()
 
-    companion object {
-        fun newInstance() = GalleryFragment()
-    }
-
-    private val pageViewModel: PageViewModel by sharedViewModel()
+    private val viewModel: GalleryViewModel by viewModel()
 
     private var _binding: FragmentGalleryBinding? = null
 
@@ -30,27 +26,13 @@ class GalleryFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-        val root = binding.root
 
-        val viewPager: ViewPager = binding.viewPager
+        Glide.with(this)
+            .load(args.imageUrl)
+            .into(binding.ivPhoto)
 
-        val galleryAdapter = GalleryAdapter(
-            requireContext(), childFragmentManager, emptyList()
-        )
-
-        viewPager.adapter = galleryAdapter
-
-        pageViewModel.getPhotos().observe(viewLifecycleOwner) { list ->
-            val indexOfSelectedPhoto = list.indexOfFirst { photo -> pageViewModel.selectedId == photo.id }
-Log.d("index of selected ID", indexOfSelectedPhoto.toString())
-            galleryAdapter.tabs = list.map { photo -> photo.img_src }
-            galleryAdapter.notifyDataSetChanged()
-
-            viewPager.currentItem = indexOfSelectedPhoto
-        }
-
-        return root
+        return binding.root
     }
 }

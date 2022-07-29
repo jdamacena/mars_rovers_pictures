@@ -2,8 +2,6 @@ package com.juniordamacena.marpics.adapters
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.juniordamacena.marpics.models.main.Rover
@@ -15,7 +13,7 @@ import com.juniordamacena.marpics.ui.main.PageFragment
  */
 class RoverTabsAdapter(
     private val context: Context,
-    f: FragmentActivity,
+    f: Fragment,
     var tabs: List<Rover>,
 ) : FragmentStateAdapter(f) {
 

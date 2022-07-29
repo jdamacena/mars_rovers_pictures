@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.juniordamacena.marpics.R
 import com.juniordamacena.marpics.adapters.PhotoListAdapter
@@ -15,6 +14,7 @@ import com.juniordamacena.marpics.databinding.FragmentPageBinding
 import com.juniordamacena.marpics.models.main.Photo
 import com.juniordamacena.marpics.models.main.Rover
 import com.juniordamacena.marpics.viewmodels.PageViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A placeholder fragment containing a simple view.
@@ -22,7 +22,7 @@ import com.juniordamacena.marpics.viewmodels.PageViewModel
 class PageFragment : Fragment() {
     private var rover: Rover? = null
 
-    private val pageViewModel: PageViewModel by navGraphViewModels(R.id.navigation)
+    private val pageViewModel: PageViewModel by viewModel()
 
     private var _binding: FragmentPageBinding? = null
 
@@ -34,7 +34,11 @@ class PageFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            pageViewModel.queryPhotos(rover?.name!!)
+            val roverName = rover?.name
+
+            if (roverName != null) {
+                pageViewModel.queryPhotos(roverName)
+            }
         }
     }
 
@@ -44,7 +48,6 @@ class PageFragment : Fragment() {
     ): View {
 
         _binding = FragmentPageBinding.inflate(inflater, container, false)
-        val root = binding.root
 
 
         pageViewModel.getIsLoading().observe(viewLifecycleOwner) {
@@ -67,13 +70,12 @@ class PageFragment : Fragment() {
             repositoriesAdapter.notifyDataSetChanged()
         }
 
-        return root
+        return binding.root
     }
 
     private fun adapterOnClick(photo: Photo) {
-        pageViewModel.selectedId = photo.id
-
-        val action = MainFragmentDirections.actionMainFragmentToPageFragment()
+        val action =
+            MainFragmentDirections.actionMainFragmentToGalleryFragment(imageUrl = photo.img_src)
 
         findNavController().navigate(action)
     }

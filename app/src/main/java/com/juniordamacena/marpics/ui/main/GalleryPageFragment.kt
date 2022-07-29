@@ -34,7 +34,6 @@ class GalleryPageFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentGalleryPageBinding.inflate(inflater, container, false)
-        val root = binding.root
 
         binding.textView.text = photo?.img_src
 
@@ -42,6 +41,6 @@ class GalleryPageFragment : Fragment() {
             .load(photo?.img_src)
             .into(binding.imageView3)
 
-        return root
+        return binding.root
     }
 }

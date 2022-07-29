@@ -44,20 +44,15 @@ class MainFragment : Fragment() {
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
-        val root = binding.root
         val fab: FloatingActionButton = binding.fab
         val viewPager: ViewPager2 = binding.viewPager
         val tabs: TabLayout = binding.tabs
 
         val roverTabsAdapter = RoverTabsAdapter(
-            requireContext(), requireActivity(), emptyList()
+            requireContext(), this, emptyList()
         )
 
         viewPager.adapter = roverTabsAdapter
-
-        TabLayoutMediator(tabs, viewPager) { tab: TabLayout.Tab, position: Int ->
-            tab.text = position.toString()
-        }.attach()
 
         fab.setOnClickListener {
             val action = MainFragmentDirections.actionMainFragmentToApodFragment()
@@ -72,15 +67,28 @@ class MainFragment : Fragment() {
         viewModel.getListRovers().observe(viewLifecycleOwner) { listRovers ->
             if (listRovers == null) return@observe
 
+            TabLayoutMediator(tabs, viewPager) { tab: TabLayout.Tab, position: Int ->
+                tab.text = listRovers[position].name
+            }.attach()
+
             (viewPager.adapter as RoverTabsAdapter).apply {
                 this.tabs = listRovers
                 notifyDataSetChanged()
             }
 
-            viewPager.currentItem = viewModel.selectedTabIndex
+            val position = viewModel.selectedTabIndex
+
+            // Workaround to update the current item in viewPager2
+            tabs.post {
+                tabs.selectTab(tabs.getTabAt(position))
+                viewPager.post {
+                    viewPager.currentItem = position
+                    viewPager.requestTransform()
+                }
+            }
         }
 
-        return root
+        return binding.root
     }
 
     override fun onStop() {

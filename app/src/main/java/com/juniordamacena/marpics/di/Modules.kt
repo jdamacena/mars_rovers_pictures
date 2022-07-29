@@ -3,9 +3,7 @@ package com.juniordamacena.marpics.di
 import com.juniordamacena.marpics.repositories.PhotosRepository
 import com.juniordamacena.marpics.repositories.PhotosRepositoryImpl
 import com.juniordamacena.marpics.services.NasaApiService
-import com.juniordamacena.marpics.viewmodels.ApodViewModel
-import com.juniordamacena.marpics.viewmodels.MainViewModel
-import com.juniordamacena.marpics.viewmodels.PageViewModel
+import com.juniordamacena.marpics.viewmodels.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -30,4 +28,6 @@ val appModule = module {
     viewModel { ApodViewModel() }
     viewModel { PageViewModel() } //{ parameters -> PageViewModel(rover = parameters.get()) }
     viewModel { MainViewModel() }
+    viewModel { GalleryViewModel() }
+    viewModel { GalleryPageViewModel() }
 }
