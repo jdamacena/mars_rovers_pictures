@@ -72,4 +72,8 @@ dependencies {
     implementation "io.insert-koin:koin-android:$koin_version"
 
     implementation "androidx.cardview:cardview:1.0.0"
+
+    implementation 'io.github.igreenwood.loupe:loupe:1.2.2'
+    // optional
+    implementation 'io.github.igreenwood.loupe:extensions:1.0.1'
 }
