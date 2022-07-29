@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.juniordamacena.marpics.adapters.RoverTabsAdapter
 import com.juniordamacena.marpics.databinding.FragmentMainBinding
 import com.juniordamacena.marpics.viewmodels.MainViewModel
@@ -39,21 +40,24 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         val root = binding.root
         val fab: FloatingActionButton = binding.fab
-        val viewPager: ViewPager = binding.viewPager
+        val viewPager: ViewPager2 = binding.viewPager
         val tabs: TabLayout = binding.tabs
 
         val roverTabsAdapter = RoverTabsAdapter(
-            requireContext(), childFragmentManager, emptyList()
+            requireContext(), requireActivity(), emptyList()
         )
 
         viewPager.adapter = roverTabsAdapter
-        tabs.setupWithViewPager(viewPager)
+
+        TabLayoutMediator(tabs, viewPager) { tab: TabLayout.Tab, position: Int ->
+            tab.text = position.toString()
+        }.attach()
 
         fab.setOnClickListener {
             val action = MainFragmentDirections.actionMainFragmentToApodFragment()

@@ -2,8 +2,10 @@ package com.juniordamacena.marpics.adapters
 
 import android.content.Context
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.juniordamacena.marpics.models.main.Rover
 import com.juniordamacena.marpics.ui.main.PageFragment
 
@@ -13,21 +15,16 @@ import com.juniordamacena.marpics.ui.main.PageFragment
  */
 class RoverTabsAdapter(
     private val context: Context,
-    fm: FragmentManager,
-    var tabs: List<Rover>
-) :
-    FragmentPagerAdapter(fm) {
+    f: FragmentActivity,
+    var tabs: List<Rover>,
+) : FragmentStateAdapter(f) {
 
-    override fun getItem(position: Int): Fragment {
-        return PageFragment.newInstance(tabs.elementAt(position))
-    }
-
-    override fun getPageTitle(position: Int): CharSequence {
-        return tabs.elementAt(position).name
-    }
-
-    override fun getCount(): Int {
+    override fun getItemCount(): Int {
         // Show total of pages.
         return tabs.size
+    }
+
+    override fun createFragment(position: Int): Fragment {
+        return PageFragment.newInstance(tabs.elementAt(position))
     }
 }
