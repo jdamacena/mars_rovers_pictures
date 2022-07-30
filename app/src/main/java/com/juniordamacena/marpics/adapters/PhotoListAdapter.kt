@@ -13,7 +13,7 @@ import com.juniordamacena.marpics.models.main.Photo
 
 /*Created by junio on 25/07/2022.*/
 class PhotoListAdapter(
-    val list: MutableList<Photo>,
+    var list: MutableList<Photo>,
     private val onClick: (Photo) -> Unit
 ) : RecyclerView.Adapter<PhotoListAdapter.PhotoListViewHolder>() {
 

@@ -14,7 +14,7 @@ import org.koin.core.component.inject
 class PageViewModel() : ViewModel(), KoinComponent {
     private val photosRepository: PhotosRepository by inject()
 
-    var selectedId = 0
+    lateinit var roverName: String
 
     private val _isLoading = MutableLiveData<Boolean>()
     private val _photos = MutableLiveData<List<Photo>>()

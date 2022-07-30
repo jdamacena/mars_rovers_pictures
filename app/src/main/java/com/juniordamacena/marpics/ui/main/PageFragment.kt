@@ -37,6 +37,7 @@ class PageFragment : Fragment() {
             val roverName = rover?.name
 
             if (roverName != null) {
+                pageViewModel.roverName = roverName
                 pageViewModel.queryPhotos(roverName)
             }
         }
@@ -50,8 +51,12 @@ class PageFragment : Fragment() {
         _binding = FragmentPageBinding.inflate(inflater, container, false)
 
 
-        pageViewModel.getIsLoading().observe(viewLifecycleOwner) {
-            binding.progressBar.isVisible = it
+        pageViewModel.getIsLoading().observe(viewLifecycleOwner) { isLoading ->
+            if (!binding.swipeRefresh.isRefreshing) {
+                binding.progressBar.isVisible = isLoading
+            } else if (isLoading == false) {
+                binding.swipeRefresh.isRefreshing = false
+            }
         }
 
         val repositoriesAdapter =
@@ -63,10 +68,14 @@ class PageFragment : Fragment() {
                 GridLayoutManager(context, resources.getInteger(R.integer.photo_list_num_columns))
         }
 
+        binding.swipeRefresh.setOnRefreshListener {
+            pageViewModel.queryPhotos(pageViewModel.roverName)
+        }
+
         pageViewModel.getPhotos().observe(viewLifecycleOwner) {
             if (it == null) return@observe
 
-            repositoriesAdapter.list.addAll(it)
+            repositoriesAdapter.list = it.toMutableList()
             repositoriesAdapter.notifyDataSetChanged()
         }
 
