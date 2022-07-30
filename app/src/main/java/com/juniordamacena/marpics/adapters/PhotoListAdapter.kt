@@ -2,6 +2,8 @@ package com.juniordamacena.marpics.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -13,9 +15,9 @@ import com.juniordamacena.marpics.models.main.Photo
 
 /*Created by junio on 25/07/2022.*/
 class PhotoListAdapter(
-    var list: MutableList<Photo>,
-    private val onClick: (Photo) -> Unit
-) : RecyclerView.Adapter<PhotoListAdapter.PhotoListViewHolder>() {
+    diffCallback: DiffUtil.ItemCallback<Photo>,
+    private val onClick: (Photo) -> Unit,
+) : PagingDataAdapter<Photo, PhotoListAdapter.PhotoListViewHolder>(diffCallback) {
 
     inner class PhotoListViewHolder(val binding: PhotoListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -29,7 +31,9 @@ class PhotoListAdapter(
     }
 
     override fun onBindViewHolder(holder: PhotoListViewHolder, position: Int) {
-        val photo = list[position]
+        val photo = getItem(position)
+
+        if (photo == null) return
 
         holder.itemView.setOnClickListener { onClick(photo) }
 
@@ -43,9 +47,5 @@ class PhotoListAdapter(
                 .placeholder(android.R.drawable.ic_menu_report_image)
                 .into(imageView)
         }
-    }
-
-    override fun getItemCount(): Int {
-        return list.size
     }
 }

@@ -18,7 +18,7 @@ interface NasaApiService {
     suspend fun listPhotos(
         @Path("rover_name") rover_name: String,
         @Query("api_key") api_key: String,
-        @Query("earth_date") earth_date: String?,
+        @Query("earth_date") earth_date: String? = null,
         @Query("sol") sol: Int?,
         @Query("page") page: Int = 1,
         @Query("camera") camera: String? = null,

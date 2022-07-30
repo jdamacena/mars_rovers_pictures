@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.juniordamacena.marpics.R
 import com.juniordamacena.marpics.adapters.PhotoListAdapter
@@ -14,11 +16,10 @@ import com.juniordamacena.marpics.databinding.FragmentPageBinding
 import com.juniordamacena.marpics.models.main.Photo
 import com.juniordamacena.marpics.models.main.Rover
 import com.juniordamacena.marpics.viewmodels.PageViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-/**
- * A placeholder fragment containing a simple view.
- */
 class PageFragment : Fragment() {
     private var rover: Rover? = null
 
@@ -33,13 +34,8 @@ class PageFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (savedInstanceState == null) {
-            val roverName = rover?.name
-
-            if (roverName != null) {
-                pageViewModel.roverName = roverName
-                pageViewModel.queryPhotos(roverName)
-            }
+        if (savedInstanceState == null && rover != null) {
+            pageViewModel.rover = rover!!
         }
     }
 
@@ -60,7 +56,7 @@ class PageFragment : Fragment() {
         }
 
         val repositoriesAdapter =
-            PhotoListAdapter(mutableListOf(), this@PageFragment::adapterOnClick)
+            PhotoListAdapter(PhotoComparator, this@PageFragment::adapterOnClick)
 
         binding.rvPhotosList.apply {
             adapter = repositoriesAdapter
@@ -69,14 +65,13 @@ class PageFragment : Fragment() {
         }
 
         binding.swipeRefresh.setOnRefreshListener {
-            pageViewModel.queryPhotos(pageViewModel.roverName)
+            // todo: Get first page on the Paging Library
         }
 
-        pageViewModel.getPhotos().observe(viewLifecycleOwner) {
-            if (it == null) return@observe
-
-            repositoriesAdapter.list = it.toMutableList()
-            repositoriesAdapter.notifyDataSetChanged()
+        lifecycleScope.launch {
+            pageViewModel.flow.collectLatest { pagingData ->
+                repositoriesAdapter.submitData(pagingData)
+            }
         }
 
         return binding.root
@@ -99,6 +94,17 @@ class PageFragment : Fragment() {
             return PageFragment().also {
                 it.rover = rover
             }
+        }
+    }
+
+    object PhotoComparator : DiffUtil.ItemCallback<Photo>() {
+        override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+            // Id is unique.
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+            return oldItem == newItem
         }
     }
 

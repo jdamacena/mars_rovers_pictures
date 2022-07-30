@@ -73,7 +73,12 @@ dependencies {
 
     implementation "androidx.cardview:cardview:1.0.0"
 
+    // Loupe, image zoom library
     implementation 'io.github.igreenwood.loupe:loupe:1.2.2'
-    // optional
     implementation 'io.github.igreenwood.loupe:extensions:1.0.1'
+
+    def paging_version = "3.0.0"
+
+    implementation "androidx.paging:paging-runtime:$paging_version"
+
 }

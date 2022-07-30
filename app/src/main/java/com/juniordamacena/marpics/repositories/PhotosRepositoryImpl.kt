@@ -68,15 +68,19 @@ class PhotosRepositoryImpl(
         return photosList
     }
 
-    override suspend fun queryPhotosByRover(rover: Rover): List<Photo> {
+    override suspend fun queryPhotosByRover(
+        roverName: String,
+        sol: Int,
+        pageNumber: Int
+    ): List<Photo> {
         var photosList: List<Photo> = emptyList()
 
         try {
             val response = nasaApiService.listPhotos(
-                rover.name,
+                roverName,
                 API_KEY,
-                earth_date = rover.max_date ?: rover.landing_date,
-                sol = null
+                sol = sol,
+                page = pageNumber
             )
             val listPhotos: List<Photo>? = response.body()?.photos
 
