@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.juniordamacena.marpics.R
@@ -39,17 +40,18 @@ class PageFragment : Fragment() {
 
         _binding = FragmentPageBinding.inflate(inflater, container, false)
 
+        val repositoriesAdapter =
+            PhotoListAdapter(PhotoComparator, this@PageFragment::adapterOnClick)
 
-        pageViewModel.getIsLoading().observe(viewLifecycleOwner) { isLoading ->
+        repositoriesAdapter.addLoadStateListener { loadState ->
+            val isLoading = loadState.refresh is LoadState.Loading
+
             if (!binding.swipeRefresh.isRefreshing) {
                 binding.progressBar.isVisible = isLoading
-            } else if (isLoading == false) {
+            } else if (!isLoading) {
                 binding.swipeRefresh.isRefreshing = false
             }
         }
-
-        val repositoriesAdapter =
-            PhotoListAdapter(PhotoComparator, this@PageFragment::adapterOnClick)
 
         binding.rvPhotosList.apply {
             adapter = repositoriesAdapter
@@ -58,7 +60,7 @@ class PageFragment : Fragment() {
         }
 
         binding.swipeRefresh.setOnRefreshListener {
-            // todo: Get first page on the Paging Library
+            pageViewModel.invalidatePagingSource()
         }
 
         lifecycleScope.launch {
