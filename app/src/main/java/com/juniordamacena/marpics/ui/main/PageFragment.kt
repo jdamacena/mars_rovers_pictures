@@ -27,18 +27,14 @@ class PageFragment : Fragment() {
 
     private val pageViewModel: PageViewModel by viewModel(parameters = { parametersOf(rover) })
 
-    private var _binding: FragmentPageBinding? = null
-
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
-        _binding = FragmentPageBinding.inflate(inflater, container, false)
+        val binding = FragmentPageBinding.inflate(inflater, container, false)
 
         val repositoriesAdapter =
             PhotoListAdapter(PhotoComparator, this@PageFragment::adapterOnClick)
@@ -101,10 +97,5 @@ class PageFragment : Fragment() {
         override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
             return oldItem == newItem
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
