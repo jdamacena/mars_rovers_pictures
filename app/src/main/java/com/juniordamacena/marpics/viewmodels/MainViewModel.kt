@@ -13,8 +13,6 @@ import org.koin.core.component.inject
 class MainViewModel : ViewModel(), KoinComponent {
     private val photosRepository: PhotosRepository by inject()
 
-    var selectedTabIndex = 0
-
     private val _listRovers = MutableLiveData<List<Rover>>()
     private val _isLoading = MutableLiveData<Boolean>()
 

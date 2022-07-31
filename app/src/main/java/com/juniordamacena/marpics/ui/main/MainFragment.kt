@@ -17,11 +17,6 @@ import com.juniordamacena.marpics.viewmodels.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
     private val viewModel: MainViewModel by viewModel()
     private var _binding: FragmentMainBinding? = null
 
@@ -48,12 +43,6 @@ class MainFragment : Fragment() {
         val viewPager: ViewPager2 = binding.viewPager
         val tabs: TabLayout = binding.tabs
 
-        val roverTabsAdapter = RoverTabsAdapter(
-            requireContext(), this, emptyList()
-        )
-
-        viewPager.adapter = roverTabsAdapter
-
         fab.setOnClickListener {
             val action = MainFragmentDirections.actionMainFragmentToApodFragment()
             it.findNavController().navigate(action)
@@ -67,33 +56,17 @@ class MainFragment : Fragment() {
         viewModel.getListRovers().observe(viewLifecycleOwner) { listRovers ->
             if (listRovers == null) return@observe
 
+            val roverTabsAdapter = RoverTabsAdapter(
+                requireContext(), this, listRovers
+            )
+
+            viewPager.adapter = roverTabsAdapter
+
             TabLayoutMediator(tabs, viewPager) { tab: TabLayout.Tab, position: Int ->
                 tab.text = listRovers[position].name
             }.attach()
-
-            (viewPager.adapter as RoverTabsAdapter).apply {
-                this.tabs = listRovers
-                notifyDataSetChanged()
-            }
-
-            val position = viewModel.selectedTabIndex
-
-            // Workaround to update the current item in viewPager2
-            tabs.post {
-                tabs.selectTab(tabs.getTabAt(position))
-                viewPager.post {
-                    viewPager.currentItem = position
-                    viewPager.requestTransform()
-                }
-            }
         }
 
         return binding.root
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        viewModel.selectedTabIndex = binding.tabs.selectedTabPosition
     }
 }
