@@ -26,7 +26,7 @@ val appModule = module {
     single<PhotosRepository> { PhotosRepositoryImpl(get(), get(named("API_KEY"))) }
 
     viewModel { ApodViewModel() }
-    viewModel { PageViewModel() } //{ parameters -> PageViewModel(rover = parameters.get()) }
+    viewModel { parameters -> PageViewModel(rover = parameters.get()) }
     viewModel { MainViewModel() }
     viewModel { GalleryViewModel() }
     viewModel { GalleryPageViewModel() }

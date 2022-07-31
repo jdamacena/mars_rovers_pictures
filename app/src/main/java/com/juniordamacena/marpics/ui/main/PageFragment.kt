@@ -19,25 +19,18 @@ import com.juniordamacena.marpics.viewmodels.PageViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class PageFragment : Fragment() {
-    private var rover: Rover? = null
+    private lateinit var rover: Rover
 
-    private val pageViewModel: PageViewModel by viewModel()
+    private val pageViewModel: PageViewModel by viewModel(parameters = { parametersOf(rover) })
 
     private var _binding: FragmentPageBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        if (savedInstanceState == null && rover != null) {
-            pageViewModel.rover = rover!!
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

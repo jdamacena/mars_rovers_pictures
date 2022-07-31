@@ -15,10 +15,8 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class PageViewModel() : ViewModel(), KoinComponent {
+class PageViewModel(val rover: Rover) : ViewModel(), KoinComponent {
     private val photosRepository: PhotosRepository by inject()
-
-    lateinit var rover: Rover
 
     // Configure how data is loaded by passing additional properties to
     // PagingConfig, such as prefetchDistance.
