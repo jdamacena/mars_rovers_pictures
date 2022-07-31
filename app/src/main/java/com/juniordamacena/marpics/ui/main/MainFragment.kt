@@ -56,14 +56,16 @@ class MainFragment : Fragment() {
         viewModel.getListRovers().observe(viewLifecycleOwner) { listRovers ->
             if (listRovers == null) return@observe
 
+            val listRoversOrdered = listRovers.sortedByDescending { rover -> rover.max_date }
+
             val roverTabsAdapter = RoverTabsAdapter(
-                requireContext(), this, listRovers
+                requireContext(), this, listRoversOrdered
             )
 
             viewPager.adapter = roverTabsAdapter
 
             TabLayoutMediator(tabs, viewPager) { tab: TabLayout.Tab, position: Int ->
-                tab.text = listRovers[position].name
+                tab.text = listRoversOrdered[position].name
             }.attach()
         }
 
