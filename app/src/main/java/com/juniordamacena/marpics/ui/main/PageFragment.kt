@@ -36,10 +36,9 @@ class PageFragment : Fragment() {
     ): View {
         val binding = FragmentPageBinding.inflate(inflater, container, false)
 
-        val repositoriesAdapter =
-            PhotoListAdapter(PhotoComparator, this@PageFragment::adapterOnClick)
+        val photoListAdapter = PhotoListAdapter(PhotoComparator, this@PageFragment::adapterOnClick)
 
-        repositoriesAdapter.addLoadStateListener { loadState ->
+        photoListAdapter.addLoadStateListener { loadState ->
             val isLoading = loadState.refresh is LoadState.Loading
 
             if (!binding.swipeRefresh.isRefreshing) {
@@ -50,7 +49,7 @@ class PageFragment : Fragment() {
         }
 
         binding.rvPhotosList.apply {
-            adapter = repositoriesAdapter
+            adapter = photoListAdapter
             layoutManager =
                 GridLayoutManager(context, resources.getInteger(R.integer.photo_list_num_columns))
         }
@@ -61,7 +60,7 @@ class PageFragment : Fragment() {
 
         lifecycleScope.launch {
             pageViewModel.flow.collectLatest { pagingData ->
-                repositoriesAdapter.submitData(pagingData)
+                photoListAdapter.submitData(pagingData)
             }
         }
 
